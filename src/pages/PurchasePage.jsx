@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+ 
+import api from "../api";
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import "./DashboardPage.css";
 
@@ -22,12 +23,12 @@ function PurchasePage() {
   ];
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/inventory/items/")
+    api
+      .get("/inventory/items/")
       .then((res) => setInventoryItems(res.data));
 
-    axios
-      .get("http://127.0.0.1:8000/api/employees/employees/")
+    api
+      .get("/employees/employees/")
       .then((res) => setEmployees(res.data));
   }, []);
 

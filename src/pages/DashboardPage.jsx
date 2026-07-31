@@ -69,8 +69,9 @@
 // export default DashboardPage;
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+ 
 import "./DashboardPage.css";
+import api from "../api";
 
 function DashboardPage() {
   const [menuCount, setMenuCount] = useState(0);
@@ -84,20 +85,20 @@ function DashboardPage() {
 
   const fetchDashboardData = async () => {
     try {
-      const menuRes = await axios.get(
-        "http://127.0.0.1:8000/api/restaurant/menu-items/"
+      const menuRes = await  api.get(
+        "/restaurant/menu-items/"
       );
 
-      const tableRes = await axios.get(
-        "http://127.0.0.1:8000/api/restaurant/tables/"
+      const tableRes = await  api.get(
+        "/restaurant/tables/"
       );
 
-      const orderRes = await axios.get(
-        "http://127.0.0.1:8000/api/restaurant/orders/"
+      const orderRes = await  api.get(
+        "/restaurant/orders/"
       );
 
-      const billRes = await axios.get(
-        "http://127.0.0.1:8000/api/restaurant/bills/"
+      const billRes = await  api.get(
+        "/restaurant/bills/"
       );
 
       setMenuCount(menuRes.data.length);

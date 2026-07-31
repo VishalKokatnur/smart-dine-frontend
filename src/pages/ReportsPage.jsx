@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+ 
+import api from "../api";
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import { Bar, Pie } from "react-chartjs-2";
 import {
@@ -27,12 +28,12 @@ function ReportsPage() {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/restaurant/bills/")
+    api
+      .get("/restaurant/bills/")
       .then((res) => setBills(res.data));
 
-    axios
-      .get("http://127.0.0.1:8000/api/restaurant/orders/")
+    api
+      .get("/restaurant/orders/")
       .then((res) => setOrders(res.data));
   }, []);
 

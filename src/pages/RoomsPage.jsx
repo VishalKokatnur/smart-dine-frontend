@@ -1,5 +1,6 @@
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import "./DashboardPage.css";
+import api from "../api";
 
 function RoomsPage() {
   return (

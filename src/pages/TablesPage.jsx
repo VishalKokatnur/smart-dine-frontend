@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+ 
+import api from "../api";
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import "./DashboardPage.css";
 
@@ -19,8 +20,8 @@ function TablesPage() {
   }, []);
 
   const fetchTables = async () => {
-    const response = await axios.get(
-      "http://127.0.0.1:8000/api/restaurant/tables/"
+    const response = await api.get(
+      "/restaurant/tables/"
     );
     setTables(response.data);
   };
@@ -36,14 +37,14 @@ function TablesPage() {
     e.preventDefault();
 
     if (editingId) {
-      await axios.put(
-        `http://127.0.0.1:8000/api/restaurant/tables/${editingId}/`,
+      await api.put(
+        `/restaurant/tables/${editingId}/`,
         formData
       );
       alert("Table updated successfully");
     } else {
-      await axios.post(
-        "http://127.0.0.1:8000/api/restaurant/tables/",
+      await api.post(
+        "/restaurant/tables/",
         formData
       );
       alert("Table added successfully");
@@ -70,7 +71,7 @@ function TablesPage() {
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this table?")) {
-      await axios.delete(`http://127.0.0.1:8000/api/restaurant/tables/${id}/`);
+      await api.delete(`/restaurant/tables/${id}/`);
       alert("Table deleted successfully");
       fetchTables();
     }

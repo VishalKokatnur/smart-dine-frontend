@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+ 
+import api from "../api";
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import "./DashboardPage.css";
 
@@ -13,9 +14,9 @@ function KitchenPage() {
   }, []);
 
   const fetchData = async () => {
-    const orderRes = await axios.get("http://127.0.0.1:8000/api/restaurant/orders/");
-    const tableRes = await axios.get("http://127.0.0.1:8000/api/restaurant/tables/");
-    const menuRes = await axios.get("http://127.0.0.1:8000/api/restaurant/menu-items/");
+    const orderRes = await api.get("/restaurant/orders/");
+    const tableRes = await api.get("/restaurant/tables/");
+    const menuRes = await api.get("/restaurant/menu-items/");
 
     setOrders(orderRes.data);
     setTables(tableRes.data);
@@ -37,7 +38,7 @@ function KitchenPage() {
   };
 
   const updateStatus = async (order, status) => {
-    await axios.put(`http://127.0.0.1:8000/api/restaurant/orders/${order.id}/`, {
+    await api.put(`/restaurant/orders/${order.id}/`, {
       table: order.table,
       items: order.items,
       status: status,

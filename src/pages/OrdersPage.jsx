@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+ 
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import "./DashboardPage.css";
+import api from "../api";
 
 function OrdersPage() {
   const [orders, setOrders] = useState([]);
@@ -22,17 +23,17 @@ function OrdersPage() {
   }, []);
 
   const fetchOrders = async () => {
-    const response = await axios.get("http://127.0.0.1:8000/api/restaurant/orders/");
+    const response = await api.get("/restaurant/orders/");
     setOrders(response.data);
   };
 
   const fetchTables = async () => {
-    const response = await axios.get("http://127.0.0.1:8000/api/restaurant/tables/");
+    const response = await api.get("/restaurant/tables/");
     setTables(response.data);
   };
 
   const fetchMenuItems = async () => {
-    const response = await axios.get("http://127.0.0.1:8000/api/restaurant/menu-items/");
+    const response = await api.get("/restaurant/menu-items/");
     setMenuItems(response.data);
   };
 
@@ -58,13 +59,13 @@ function OrdersPage() {
     e.preventDefault();
 
     if (editingId) {
-      await axios.put(
-        `http://127.0.0.1:8000/api/restaurant/orders/${editingId}/`,
+      await api.put(
+        `/restaurant/orders/${editingId}/`,
         formData
       );
       alert("Order updated successfully");
     } else {
-      await axios.post("http://127.0.0.1:8000/api/restaurant/orders/", formData);
+      await api.post("/restaurant/orders/", formData);
       alert("Order created successfully");
     }
 
@@ -89,7 +90,7 @@ function OrdersPage() {
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this order?")) {
-      await axios.delete(`http://127.0.0.1:8000/api/restaurant/orders/${id}/`);
+      await api.delete(`/restaurant/orders/${id}/`);
       alert("Order deleted successfully");
       fetchOrders();
     }

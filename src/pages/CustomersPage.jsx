@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+ 
+import api from "../api";
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import "./DashboardPage.css";
 
@@ -21,8 +22,8 @@ function CustomersPage() {
   }, []);
 
   const fetchCustomers = async () => {
-    const res = await axios.get(
-      "http://127.0.0.1:8000/api/restaurant/customers/"
+    const res = await api.get(
+      "api/restaurant/customers/"
     );
     setCustomers(res.data);
   };
@@ -38,14 +39,14 @@ function CustomersPage() {
     e.preventDefault();
 
     if (editingId) {
-      await axios.put(
-        `http://127.0.0.1:8000/api/restaurant/customers/${editingId}/`,
+      await  api.put(
+        `/restaurant/customers/${editingId}/`,
         formData
       );
       alert("Customer updated successfully");
     } else {
-      await axios.post(
-        "http://127.0.0.1:8000/api/restaurant/customers/",
+      await  api.post(
+        "/restaurant/customers/",
         formData
       );
       alert("Customer added successfully");
@@ -75,8 +76,8 @@ function CustomersPage() {
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this customer?")) {
-      await axios.delete(
-        `http://127.0.0.1:8000/api/restaurant/customers/${id}/`
+      await  api.delete(
+        `/api/restaurant/customers/${id}/`
       );
       fetchCustomers();
     }

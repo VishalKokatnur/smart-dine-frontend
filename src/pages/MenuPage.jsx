@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+ 
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import "./DashboardPage.css";
+import api from "../api";
 
 function MenuPage() {
   const [menuItems, setMenuItems] = useState([]);
@@ -20,8 +21,8 @@ function MenuPage() {
   }, []);
 
   const fetchMenuItems = async () => {
-    const response = await axios.get(
-      "http://127.0.0.1:8000/api/restaurant/menu-items/"
+    const response = await api.get(
+      "/restaurant/menu-items/"
     );
     setMenuItems(response.data);
   };
@@ -38,14 +39,14 @@ function MenuPage() {
     e.preventDefault();
 
     if (editingId) {
-      await axios.put(
-        `http://127.0.0.1:8000/api/restaurant/menu-items/${editingId}/`,
+      await api.put(
+        `/restaurant/menu-items/${editingId}/`,
         formData
       );
       alert("Menu item updated successfully");
     } else {
-      await axios.post(
-        "http://127.0.0.1:8000/api/restaurant/menu-items/",
+      await api.post(
+        "/restaurant/menu-items/",
         formData
       );
       alert("Menu item added successfully");
@@ -73,8 +74,8 @@ function MenuPage() {
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this menu item?")) {
-      await axios.delete(
-        `http://127.0.0.1:8000/api/restaurant/menu-items/${id}/`
+      await api.delete(
+        `/restaurant/menu-items/${id}/`
       );
       alert("Menu item deleted successfully");
       fetchMenuItems();

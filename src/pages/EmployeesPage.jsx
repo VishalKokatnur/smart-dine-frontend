@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+ 
+import api from "../api";
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import "./DashboardPage.css";
 
@@ -24,7 +25,7 @@ function EmployeesPage() {
   }, []);
 
   const fetchEmployees = async () => {
-    const res = await axios.get("http://127.0.0.1:8000/api/employees/employees/");
+    const res = await api.get("/employees/employees/");
     setEmployees(res.data);
   };
 
@@ -41,14 +42,14 @@ function EmployeesPage() {
     e.preventDefault();
 
     if (editingId) {
-      await axios.put(
-        `http://127.0.0.1:8000/api/employees/employees/${editingId}/`,
+      await api.put(
+        `/employees/employees/${editingId}/`,
         formData
       );
       alert("Employee updated successfully");
     } else {
-      await axios.post(
-        "http://127.0.0.1:8000/api/employees/employees/",
+      await api.post(
+        "/employees/employees/",
         formData
       );
       alert("Employee added successfully");
@@ -86,7 +87,7 @@ function EmployeesPage() {
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this employee?")) {
-      await axios.delete(`http://127.0.0.1:8000/api/employees/employees/${id}/`);
+      await api.delete(`/employees/employees/${id}/`);
       alert("Employee deleted successfully");
       fetchEmployees();
     }

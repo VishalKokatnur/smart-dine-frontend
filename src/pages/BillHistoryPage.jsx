@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../api";
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import "./DashboardPage.css";
 
@@ -12,9 +13,7 @@ function BillHistoryPage() {
 
   const fetchBills = async () => {
     try {
-      const response = await axios.get(
-        "http://127.0.0.1:8000/api/restaurant/bills/"
-      );
+        const response = await api.get("restaurant/bills/");;
       setBills(response.data);
     } catch (error) {
       console.log("Error fetching bills", error);

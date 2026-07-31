@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+ 
+import api from "../api";
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import "./DashboardPage.css";
 
@@ -13,7 +14,7 @@ function InventoryPage() {
   }, []);
 
   const fetchInventory = async () => {
-    const res = await axios.get("http://127.0.0.1:8000/api/inventory/items/");
+    const res = await api.get("/inventory/items/");
     setItems(res.data);
   };
 

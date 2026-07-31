@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+ 
+import api from "../api";
 import RestaurantLayout from "../layouts/RestaurantLayout";
 import "./DashboardPage.css";
 
@@ -18,13 +19,13 @@ function BillingPage() {
   const [discount, setDiscount] = useState(0);
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/restaurant/tables/")
+    api.get("/restaurant/tables/")
       .then((res) => setTables(res.data));
 
-    axios.get("http://127.0.0.1:8000/api/restaurant/orders/")
+    api.get("/restaurant/orders/")
       .then((res) => setOrders(res.data));
 
-    axios.get("http://127.0.0.1:8000/api/restaurant/menu-items/")
+    api.get("/restaurant/menu-items/")
       .then((res) => setMenuItems(res.data));
   }, []);
 
@@ -73,7 +74,7 @@ function BillingPage() {
   }
 
   try {
-    await axios.post("http://127.0.0.1:8000/api/restaurant/bills/", {
+    await api.post("/restaurant/bills/", {
       order: selectedOrder.id,
       total_amount: subtotal.toFixed(2),
       discount: Number(discount || 0).toFixed(2),

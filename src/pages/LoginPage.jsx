@@ -1,6 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
+ 
 import "./LoginPage.css";
+import api from "../api";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -10,10 +11,10 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/token/", {
-        username: username,
-        password: password,
-      });
+const response = await api.post("token/", {
+  username,
+  password,
+});
 
       localStorage.setItem("access", response.data.access);
       localStorage.setItem("refresh", response.data.refresh);
